@@ -4,10 +4,12 @@
  * @param {Function} func Оборачиваемая функция
  * @param {Integer} limit Количество попыток выполнения функции
  * @param {Object} options Опции
- * @param {Boolean} options.autoTry По умолчанию false. Если значение true - при ошибки функция будет вызываться рекурсивно пока не выполнится успешно или не закончится число попыток
+ * @param {Boolean} options.autoTry По умолчанию true. Если значение true - при ошибки функция будет вызываться рекурсивно пока не выполнится успешно или не закончится число попыток
  * @param {Boolean} options.promise Если оборачиваемая функция аснхронна, установите этот параметр как true для коректной работы
  *
  * @example
+ *
+ * const limitTry = require('limit-try-js')
  *
  * function functionName() {
  *   if (Math.random() > 0.5) {
@@ -17,9 +19,9 @@
  *   return 'ok'
  * }
  *
- * const functionNameLimit = limitTry(functionName, 3, { autoTry: true })
+ * const functionNameLimit = limitTry(functionName, 100)
  *
- * console.log(functionNameLimit())
+ * console.log(functionNameLimit()) // ok
  *
  * @return {Function}
  */
@@ -42,10 +44,7 @@ function limitTry(func, limit = 1, options = {}) {
 
   wrapperFunc.limit = limit
   wrapperFunc.current = 0
-  wrapperFunc.options = {
-    autoTry: defaultOptions.autoTry,
-    promise: defaultOptions.promise
-  } = options
+  wrapperFunc.options = { ...defaultOptions, ...options }
 
   return wrapperFunc
 }
@@ -74,7 +73,7 @@ function errorHandler(err, wrapperFunc, args) {
  * @property {Boolean} promise Если оборачиваемая функция аснхронна, установите этот параметр как true для коректной работы
  */
 const defaultOptions = {
-  autoTry: false,
+  autoTry: true,
   promise: false
 }
 

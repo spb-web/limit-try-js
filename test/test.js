@@ -5,14 +5,14 @@ const limitTry = require('../libs/limitTry')
 function alwaysSuccessFunction() {
   return 'success'
 }
-const alwaysSuccessFunctionLimit = limitTry(alwaysSuccessFunction, 1)
-const alwaysSuccessFunctionLimitAutoTry = limitTry(alwaysSuccessFunction, 1, { autoTry: true })
+const alwaysSuccessFunctionLimit = limitTry(alwaysSuccessFunction, 1, { autoTry: false })
+const alwaysSuccessFunctionLimitAutoTry = limitTry(alwaysSuccessFunction, 1)
 
 function alwaysFailFunction(index) {
   throw new Error(`Error Wow`)
 }
-const alwaysFailFunctionLimit = limitTry(alwaysFailFunction, 4)
-const alwaysFailFunctionLimitAutoTry = limitTry(alwaysFailFunction, 4, { autoTry: true })
+const alwaysFailFunctionLimit = limitTry(alwaysFailFunction, 4, { autoTry: false })
+const alwaysFailFunctionLimitAutoTry = limitTry(alwaysFailFunction, 4)
 
 
 describe(`Sync function 'limitTry'`, function() {
@@ -58,11 +58,11 @@ function alwaysSuccessFunctionProm() {
 }
 
 const alwaysSuccessFunctionPromLimit = limitTry(alwaysSuccessFunctionProm, 1, {
-  promise: true
+  promise: true,
+  autoTry: false
 })
 const alwaysSuccessFunctionPromLimitAutoTry = limitTry(alwaysSuccessFunctionProm, 1, {
-  promise: true,
-  autoTry: true
+  promise: true
 })
 
 function alwaysFailFunctionProm(index) {
@@ -71,11 +71,11 @@ function alwaysFailFunctionProm(index) {
   })
 }
 const alwaysFailFunctionPromLimit = limitTry(alwaysFailFunctionProm, 4, {
-  promise: true
+  promise: true,
+  autoTry: false
 })
 const alwaysFailFunctionPromLimitAutoTry = limitTry(alwaysFailFunctionProm, 4, {
-  promise: true,
-    autoTry: true
+  promise: true
 })
 
 
