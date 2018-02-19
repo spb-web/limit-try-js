@@ -18,13 +18,13 @@
 ```js
 function functionName() {
   if (Math.random() > 0.5) {
-  throw new Error('This is Error')
+    throw new Error('This is Error')
   }
 
   return 'ok'
 }
 
-const functionNameLimit = limitTry(functionName, 3)
+const functionNameLimit = limitTry(functionName, 3, { autoTry: true })
 
 console.log(functionNameLimit())
 ```
