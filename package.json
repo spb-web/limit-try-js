@@ -1,0 +1,21 @@
+{
+  "name": "limit-try",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "example": "example",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha",
+    "docs": "jsdoc2md -c jsdoc2md/conf.json -f **/*.js -t jsdoc2md/README.bhs  > README.md; echo"
+  },
+  "author": "V.Ruzanov <spb.web@bk.ru>",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "mocha": "^5.0.1"
+  }
+}
