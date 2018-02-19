@@ -1,8 +1,8 @@
 {
-  "name": "limit-try",
-  "version": "0.0.1",
+  "name": "limit-try-js",
+  "version": "0.0.2",
   "description": "",
-  "main": "index.js",
+  "main": "libs/limitTry.js",
   "directories": {
     "example": "example",
     "test": "test"

@@ -11,13 +11,13 @@
  *
  * function functionName() {
  *   if (Math.random() > 0.5) {
- *   throw new Error('This is Error')
+ *     throw new Error('This is Error')
  *   }
  *
  *   return 'ok'
  * }
  *
- * const functionNameLimit = limitTry(functionName, 3)
+ * const functionNameLimit = limitTry(functionName, 3, { autoTry: true })
  *
  * console.log(functionNameLimit())
  *
@@ -43,7 +43,8 @@ function limitTry(func, limit = 1, options = {}) {
   wrapperFunc.limit = limit
   wrapperFunc.current = 0
   wrapperFunc.options = {
-    errorValidator: defaultOptions.errorValidator
+    autoTry: defaultOptions.autoTry,
+    promise: defaultOptions.promise
   } = options
 
   return wrapperFunc
