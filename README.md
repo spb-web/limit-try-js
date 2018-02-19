@@ -11,10 +11,25 @@ Or
 ```
 yarn add limit-try-js
 ```
+
+## Testing
+```
+npm test
+```
+Or
+```
+yarn test
+```
+
 <a name="limitTry"></a>
 
 ## limitTry(func, limit, options) ⇒ <code>function</code>
 **Kind**: global function  
+**Throws**:
+
+- Выбрасывает исключение если привышено число попыток выполнение функции
+
+**Version**: 0.0.5  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -23,6 +38,7 @@ yarn add limit-try-js
 | options | <code>Object</code> | Опции |
 | options.autoTry | <code>Boolean</code> | По умолчанию true. Если значение true - при ошибки функция будет вызываться рекурсивно пока не выполнится успешно или не закончится число попыток |
 | options.promise | <code>Boolean</code> | Если оборачиваемая функция аснхронна, установите этот параметр как true для коректной работы |
+| options.errorHandler | <code>function</code> |  |
 
 **Example**  
 ```js

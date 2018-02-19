@@ -11,4 +11,14 @@ Or
 ```
 yarn add limit-try-js
 ```
+
+## Testing
+```
+npm test
+```
+Or
+```
+yarn test
+```
+
 {{>main}}

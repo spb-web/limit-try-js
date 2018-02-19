@@ -1,14 +1,19 @@
 /**
  * @function limitTry
+ * @version 0.0.5
  *
  * @param {Function} func Оборачиваемая функция
  * @param {Integer} limit Количество попыток выполнения функции
  * @param {Object} options Опции
  * @param {Boolean} options.autoTry По умолчанию true. Если значение true - при ошибки функция будет вызываться рекурсивно пока не выполнится успешно или не закончится число попыток
  * @param {Boolean} options.promise Если оборачиваемая функция аснхронна, установите этот параметр как true для коректной работы
+ * @param {Function} options.errorHandler
+ *
+ * @throws Выбрасывает исключение если привышено число попыток выполнение функции
+ *
+ * @return {Function}
  *
  * @example
- *
  * const limitTry = require('limit-try-js')
  *
  * function functionName() {
@@ -22,8 +27,6 @@
  * const functionNameLimit = limitTry(functionName, 100)
  *
  * console.log(functionNameLimit()) // ok
- *
- * @return {Function}
  */
 function limitTry(func, limit = 1, options = {}) {
   const wrapperFunc = function(...args) {
@@ -32,13 +35,25 @@ function limitTry(func, limit = 1, options = {}) {
 
       if (wrapperFunc.options.promise) {
         return funcResult.catch(err => {
+          return wrapperFunc.options.errorHandler(err).then(() => {
+            return wrapperFunc(...args)
+          }, err => {
+            return errorHandler(err, wrapperFunc, args)
+          })
+        }).catch(err => {
           return errorHandler(err, wrapperFunc, args)
         })
       }
 
       return funcResult
     } catch (err) {
-      return errorHandler(err, wrapperFunc, args)
+      try {
+        wrapperFunc.options.errorHandler(err)
+
+        return wrapperFunc(...args)
+      } catch (err) {
+        return errorHandler(err, wrapperFunc, args)
+      }
     }
   }
 
@@ -71,10 +86,12 @@ function errorHandler(err, wrapperFunc, args) {
  * @private
  * @property {Boolean} autoTry По умолчанию false. Если значение true - при ошибки функция будет вызываться рекурсивно пока не выполнится успешно или не закончится число попыток
  * @property {Boolean} promise Если оборачиваемая функция аснхронна, установите этот параметр как true для коректной работы
+ * @property {Function} errorHandler
  */
 const defaultOptions = {
   autoTry: true,
-  promise: false
+  promise: false,
+  errorHandler: err => { throw err }
 }
 
 
